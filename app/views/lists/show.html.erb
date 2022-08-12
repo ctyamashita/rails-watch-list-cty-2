@@ -1,0 +1,17 @@
+<h1><%= @list.name %></h1>
+<%= link_to 'x', list_path(@list), data: { turbo_method: :delete, turbo_confirm: "Are you sure you want to delete this list?" }, class: 'btn btn-info' %>
+<div class="d-flex">
+  <% @list.movies.each do |movie| %>
+    <div class="card">
+      <p>movie.title</p>
+    </div>
+  <% end %>
+</div>
+
+<%= simple_form_for [@list,@bookmark] do |f| %>
+    <%= f.association :movie, collection: Movie.all.order(:title), prompt: "Select a movie", input_html: { data: { controller: "tom-select" } } %>
+    <%= f.input :comment, placeholder: "Enter a comment about the movie" %>
+    <%= f.submit %>
+<% end %>
+
+<%= link_to 'back', lists_path %>
