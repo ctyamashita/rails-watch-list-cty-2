@@ -5,9 +5,9 @@ class List < ApplicationRecord
 
   validates :name, uniqueness: true, presence: true
 
-  validate :dayo
+  # validate :dayo
 
-  def dayo
-    errors.add(:name, 'error message!') if !name.include?('dayo')
-  end
+  # def dayo
+  #   errors.add(:name, 'error message!') if !name.include?('dayo')
+  # end
 end
