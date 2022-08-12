@@ -1,9 +1,9 @@
 <h1><%= @list.name %></h1>
 <%= link_to 'x', list_path(@list), data: { turbo_method: :delete, turbo_confirm: "Are you sure you want to delete this list?" }, class: 'btn btn-info' %>
 <div class="cards">
-    <% @list.movies.each do |movie| %>
+    <% @list.movies.each_with_index do |movie, index| %>
       <div class="card-movie" style="background-image: linear-gradient(rgba(0, 0, 0, 0) 20%, rgba(0, 0, 0, 0.8) 100%), url(<%= movie.poster_url %>)">
-        <%= link_to '✖', bookmark_path(movie), data: { turbo_method: :delete, turbo_confirm: "Are you sure you want to delete this list?" }, class: 'delete-btn' %>
+        <%= link_to '✖', bookmark_path(@list.bookmark_ids[index]), method: :delete, data: {confirm: "Are you sure you want to delete #{movie.title}"}, class: 'delete-btn' %>
         <div class="rating">
           <h3 style="border-radius: 20px 0 0 20px; background-color: <%= movie.color %>">★ <%= movie.rating %></h3>
         </div>
@@ -18,7 +18,7 @@
   </div>
 
 <%= simple_form_for [@list,@bookmark] do |f| %>
-    <%= f.association :movie, collection: Movie.all.order(:title), prompt: "Select a movie", input_html: { data: { controller: "tom-select" } } %>
+    <%= f.association :movie, collection: @movies, prompt: "Select a movie", input_html: { data: { controller: "tom-select" } } %>
     <%= f.input :comment, placeholder: "Enter a comment about the movie" %>
     <%= f.submit %>
 <% end %>
