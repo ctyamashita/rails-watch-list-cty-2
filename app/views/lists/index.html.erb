@@ -7,7 +7,7 @@
           <p class='mb-0'><%= list.name %></p>
         <% end %>
         <hr>
-
+        <%= link_to 'delete', list_path(list), data: { turbo_method: :delete, turbo_confirm: "Are you sure you want to delete this list?" }, class: 'btn btn-info' %>
       </div>
     <% end %>
   </div>
